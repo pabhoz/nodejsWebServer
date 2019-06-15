@@ -10,10 +10,17 @@ app.set('view engine', 'html');
 app.engine('html', require('hbs').__express);
 
 let users = [
- {name: "Pablo", username: "Pabhoz", email: "pabhoz@usbcali.edu.co"},
- {name: "Pedro", username: "Pedroz", email: "pedroz@usbcali.edu.co"},
- {name: "Pepe", username: "Pepez", email: "pepez@usbcali.edu.co"}
+ {name: "Pablo", username: "pabhoz", email: "pabhoz@usbcali.edu.co"},
+ {name: "Pedro", username: "pedroz", email: "pedroz@usbcali.edu.co"},
+ {name: "Pepe", username: "pepez", email: "pepez@usbcali.edu.co"}
 ]
+
+/*
+app.get('*', function (req, res) {
+  let [,controller,method,param] = req.url.split("/");
+  res.render(`${controller}/${method}`);
+});
+*/
 
 app.get('/', function (req, res) {
   res.render('index/index');
@@ -23,11 +30,11 @@ app.get('/user', function (req, res) {
 });
 app.get('/user/:user', function (req, res) {
   app.set('view engine', 'hbs');
-  /**
-   * TODO: Capturar el parámetro
-   * mandar al usuario a la vista
-   * y hacer render de la información
-   */
+  
+  let u = req.params.user; console.log(u);
+  
+  let user = users.find(user => user.username.toLowerCase() == u);
+  console.log(user);
   res.render('user/detail',{user});
 });
 
